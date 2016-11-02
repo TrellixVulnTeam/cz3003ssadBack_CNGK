@@ -69,6 +69,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cz3003ssadBack.wsgi.application'
 
+#Email Server Settings
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'cz3003ssad@gmail.com'
+EMAIL_HOST_PASSWORD = 'qwerasdzx2'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases

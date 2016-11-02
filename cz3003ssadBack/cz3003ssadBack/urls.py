@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from email_handler import views as emailViews
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^email/', emailViews.index, name = "email handler"),
 ]
