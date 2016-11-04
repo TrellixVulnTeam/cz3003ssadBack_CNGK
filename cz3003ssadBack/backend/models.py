@@ -8,6 +8,8 @@ class Crisis(models.Model):
     shapeType = models.CharField(max_length=10)
     description = models.CharField(max_length=300)
     time = models.DateTimeField(auto_now_add=True)
+    location = CharField(max_length=300)
+    severity = models.IntegerField()
 
     def __str__(self):
        return self.name
@@ -19,3 +21,9 @@ class CrisisCoordinates(models.Model):
 
     def __str__(self):
        return self.crisis.name
+
+class CrisisMode(models.Model):
+    inCrisis = models.BooleanField()
+
+    def __str__(self):
+        return self.inCrisis
