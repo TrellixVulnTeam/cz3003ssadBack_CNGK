@@ -70,6 +70,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cz3003ssadBack.wsgi.application'
 
+#Email Server Settings
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'cz3003ssad@gmail.com'
+EMAIL_HOST_PASSWORD = 'qwerasdzx2'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+#SMS SERVER SETTINGS
+SMS_ID = 32511
+SMS_PW = 'qwerasdf12'
+SMS_EMAIL = 'timothy_lee@outlook.com'
+SMS_DEVICE = ''
+SMS_GATEWAY_URL = 'http://smsgateway.me/api/v3/messages/send'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
