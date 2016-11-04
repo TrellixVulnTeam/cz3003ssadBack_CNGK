@@ -16,8 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from email_handler import views as emailViews
+from smshandler import views as smsViews
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^email/', emailViews.index, name = "email handler"),
+    url(r'^sms/', smsViews.index, name = "sms handler"),
 ]
