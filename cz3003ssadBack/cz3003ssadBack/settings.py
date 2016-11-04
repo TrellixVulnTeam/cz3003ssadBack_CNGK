@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'email_handler',
+    'backend'
 ]
 
 MIDDLEWARE = [
@@ -69,7 +71,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cz3003ssadBack.wsgi.application'
 
-#Email Server Settings
+# Email Server Settings
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'cz3003ssad@gmail.com'
 EMAIL_HOST_PASSWORD = 'qwerasdzx2'
@@ -124,3 +126,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static")
+]
