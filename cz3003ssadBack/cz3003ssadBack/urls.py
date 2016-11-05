@@ -17,10 +17,15 @@ from django.conf.urls import url
 from django.contrib import admin
 from email_handler import views as emailViews
 from backend import views as backendViews
+from smshandler import views as smsViews
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+
     url(r'^email/', emailViews.index, name="email_handler"),
+
+    url(r'^sms/', smsViews.index, name="sms_handler"),
+    url(r'^sms/generateSms', smsViews.generateSms, name="send_sms"),
 
     url(r'^submitCrisis/', backendViews.submitCrisis, name="crisis_submission"),
     url(r'^getApprovedCrisis/', backendViews.getApprovedCrisis,
