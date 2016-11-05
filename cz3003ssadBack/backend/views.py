@@ -4,6 +4,7 @@ from django.core import serializers
 import json
 from backend.models import Crisis, CrisisCoordinates, CrisisMode, Dispatch
 from backend import postToFacebook, postToTwitter
+from smshandler.views import generateSms
 # Create your views here.
 
 
@@ -31,7 +32,7 @@ def submitCrisis(request):
 
 @csrf_exempt
 def approveCrisis(request, crisisID):
-    crisis = Crisis.objects.filter(id=crisisID)
+    crisis = Crisis.objects.get(id=crisisID)
     crisis.approved = True
     crisis.save()
     return HttpResponse(crisis)
@@ -39,7 +40,7 @@ def approveCrisis(request, crisisID):
 
 @csrf_exempt
 def closeCrisis(request, crisisID):
-    crisis = Crisis.objects.filter(id=crisisID)
+    crisis = Crisis.objects.get(id=crisisID)
     crisis.closed = True
     crisis.save()
     return HttpResponse(crisis)
@@ -61,9 +62,12 @@ def getUnapprovedCrisis(request):
 
 @csrf_exempt
 def sendDispatch(request, crisisID, dispatcher):
-    crisis = Crisis.objects.filter(id=crisisID)
+    crisis = Crisis.objects.get(id=crisisID)
     dispatch = Dispatch(crisis=crisis, dispatcher=dispatcher)
     # TODO SMS HANDLER
+    generateSms(request, '91007606', crisis.disaster +
+                " " + crisis.name + " at " + crisis.location)
+    dispatch.save()
     return HttpResponse(dispatch)
 
 
@@ -81,8 +85,9 @@ def toggleCrisisModeOff(request):
 
 @csrf_exempt
 def sendToTwitter(request, crisisID):
-    crisis = Crisis.objects.filter(id=crisisID)
-    tweet = crisis.name + " " + crisis.description + " at " + crisis.location
+    crisis = Crisis.objects.get(id=crisisID)
+    tweet = crisis.disaster + " " + crisis.name + " " + \
+        crisis.description + " at " + crisis.location
     for i in range(0, len(tweet), 140):
         postToTwitter.main(tweet[i:i + 140])
     return HttpResponse(crisis)
@@ -90,6 +95,7 @@ def sendToTwitter(request, crisisID):
 
 @csrf_exempt
 def sendToFacebook(request, crisisID):
-    crisis = Crisis.objects.filter(id=crisisID)
-    postToFacebook.main(crisis.name, crisis.description)
+    crisis = Crisis.objects.get(id=crisisID)
+    postToFacebook.main(crisis.disaster + " " +
+                        crisis.name + " at " + crisis.location, crisis.description)
     return HttpResponse(crisis)
