@@ -19,23 +19,24 @@ def submitCrisis(request):
     coordinates = received_json_data["coordinates"]
     crisis = Crisis(disaster=disaster, severity=severity, shapeType=shapeType,
                     description=description, location=location, name=name, time=time)
-    # crisis.save()
+    crisis.save()
     print(crisis)
     for coord in coordinates:
         coordinate = CrisisCoordinates(crisis=crisis, latitude=coord[
                                        "lat"], longitude=coord["lng"])
-        # coordinate.save()
+        coordinate.save()
     return HttpResponse(received_json_data)
 
 
 @csrf_exempt
-def getCrisis(request):
+def getApprovedCrisis(request):
     data = json.dumps([c.get_json()
-                       for c in Crisis.objects.filter(closed=False)])
-    # allCrisis = Crisis.objects.all()
-    # JSONSerializer = serializers.get_serializer("json")
-    # json_serializer = JSONSerializer()
-    # json_serializer.serialize(allCrisis)
-    # data = json_serializer.getvalue()
-    print(data)
+                       for c in Crisis.objects.filter(closed=False, approved=True)])
+    return HttpResponse(data)
+
+
+@csrf_exempt
+def getUnapprovedCrisis(request):
+    data = json.dumps([c.get_json()
+                       for c in Crisis.objects.filter(closed=False, approved=False)])
     return HttpResponse(data)

@@ -23,5 +23,8 @@ urlpatterns = [
     url(r'^email/', emailViews.index, name="email_handler"),
 
     url(r'^submitCrisis/', backendViews.submitCrisis, name="crisis_submission"),
-    url(r'^getCrisis/', backendViews.getCrisis, name="crisis_retrieval"),
+    url(r'^getApprovedCrisis/', backendViews.getApprovedCrisis,
+        name="crisis_retrieval_approved"),
+    url(r'^getUnapprovedCrisis/', backendViews.getUnapprovedCrisis,
+        name="crisis_retrieval_unapproved"),
 ]

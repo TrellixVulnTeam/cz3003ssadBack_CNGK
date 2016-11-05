@@ -11,6 +11,7 @@ class Crisis(models.Model):
     time = models.CharField(max_length=50)
     location = models.CharField(max_length=300)
     severity = models.IntegerField()
+    approved = models.BooleanField(default=False)
     closed = models.BooleanField(default=False)
 
     def __str__(self):
@@ -49,7 +50,6 @@ class CrisisMode(models.Model):
 class Dispatch(models.Model):
     crisis = models.ForeignKey(Crisis, on_delete=models.CASCADE)
     dispatcher = models.CharField(max_length=20)
-    approved = models.BooleanField(default=False)
 
     def __str__(self):
         return self.crisis.name + " " + self.dispatcher
