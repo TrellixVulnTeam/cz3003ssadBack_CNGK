@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^email/', emailViews.index, name="email_handler"),
 
     url(r'^submitCrisis/', backendViews.submitCrisis, name="crisis_submission"),
+    url(r'^getCrisis/', backendViews.getCrisis, name="crisis_retrieval"),
 ]

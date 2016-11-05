@@ -8,12 +8,24 @@ class Crisis(models.Model):
     name = models.CharField(max_length=20)
     shapeType = models.CharField(max_length=10)
     description = models.CharField(max_length=300)
-    time = models.DateTimeField(auto_now_add=True)
+    time = models.CharField(max_length=50)
     location = models.CharField(max_length=300)
     severity = models.IntegerField()
+    closed = models.BooleanField(default='False')
 
     def __str__(self):
-        return self.name
+        return self.name + " " + self.disaster + " " + self.location
+
+    def get_json(self):
+        return {
+            'disaster': self.disaster,
+            'name': self.name,
+            'type': self.shapeType,
+            'description': self.description,
+            'location': self.location,
+            'severity': self.severity,
+            'time': self.time,
+            'coordinates': [{'lat': coord.latitude, 'lng': coord.longitude} for coord in CrisisCoordinates.objects.filter(crisis=self)]}
 
 
 class CrisisCoordinates(models.Model):
@@ -22,11 +34,12 @@ class CrisisCoordinates(models.Model):
     longitude = models.FloatField()
 
     def __str__(self):
-        return self.crisis.name
+        return self.crisis.name + " lat:" + str(self.latitude) + " lng:" + str(self.longitude)
 
 
 class CrisisMode(models.Model):
     inCrisis = models.BooleanField()
+    time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.inCrisis
