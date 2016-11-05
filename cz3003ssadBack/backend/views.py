@@ -4,6 +4,7 @@ from django.core import serializers
 import json
 from backend.models import Crisis, CrisisCoordinates, CrisisMode, Dispatch
 from backend import postToFacebook, postToTwitter
+from smshandler.views import generateSms
 # Create your views here.
 
 
@@ -64,6 +65,7 @@ def sendDispatch(request, crisisID, dispatcher):
     crisis = Crisis.objects.filter(id=crisisID)
     dispatch = Dispatch(crisis=crisis, dispatcher=dispatcher)
     # TODO SMS HANDLER
+    generateSms(request, '91007606', 'hello world')
     return HttpResponse(dispatch)
 
 
