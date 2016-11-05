@@ -11,13 +11,14 @@ class Crisis(models.Model):
     time = models.CharField(max_length=50)
     location = models.CharField(max_length=300)
     severity = models.IntegerField()
-    closed = models.BooleanField(default='False')
+    closed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name + " " + self.disaster + " " + self.location
 
     def get_json(self):
         return {
+            'id': self.id,
             'disaster': self.disaster,
             'name': self.name,
             'type': self.shapeType,
@@ -43,3 +44,12 @@ class CrisisMode(models.Model):
 
     def __str__(self):
         return self.inCrisis
+
+
+class Dispatch(models.Model):
+    crisis = models.ForeignKey(Crisis, on_delete=models.CASCADE)
+    dispatcher = models.CharField(max_length=20)
+    approved = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.crisis.name + " " + self.dispatcher

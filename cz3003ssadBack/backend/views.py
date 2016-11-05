@@ -30,7 +30,8 @@ def submitCrisis(request):
 
 @csrf_exempt
 def getCrisis(request):
-    data = json.dumps([c.get_json() for c in Crisis.objects.all()])
+    data = json.dumps([c.get_json()
+                       for c in Crisis.objects.filter(closed=False)])
     # allCrisis = Crisis.objects.all()
     # JSONSerializer = serializers.get_serializer("json")
     # json_serializer = JSONSerializer()
