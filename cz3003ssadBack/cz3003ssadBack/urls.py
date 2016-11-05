@@ -22,5 +22,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^email/', emailViews.index, name="email_handler"),
 
-    url(r'^submitCrisis/', backendViews.submit, name="crisis_submition"),
+    url(r'^submitCrisis/', backendViews.submitCrisis, name="crisis_submission"),
 ]
