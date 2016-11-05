@@ -5,7 +5,9 @@ Data from Front End
 https://gist.github.com/joetancy/ef35fbe72512509e5708e91e0936f620
 
 All API calls will be in the Django development server
-127.0.0.1:800/<API-HERE>
+127.0.0.1:8000/{API-HERE}
+
+cid = Crisis ID
 
 **submitCrisis**
 
