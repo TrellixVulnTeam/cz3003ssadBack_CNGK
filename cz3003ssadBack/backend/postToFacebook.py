@@ -13,7 +13,7 @@ def main():
     # status information
     attachment = {
         'name': 'This is a pig',
-        'link': 'http://www.google.com',
+        'link': '#',
         'caption': 'Latest News',
         'description': 'Description of the crisis',
         'picture': 'https://s-media-cache-ak0.pinimg.com/564x/5f/6b/64/5f6b64420bbb41837b8d540ac325fb37.jpg'
