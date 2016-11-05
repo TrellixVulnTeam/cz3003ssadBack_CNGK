@@ -13,13 +13,13 @@ def main(message, description):
     # status information
     attachment = {
         'name': message,
-        'link': '#',
+        'link': 'https://www.google.com.sg/maps/place/Singapore/@1.3147297,103.776979,12z/data=!3m1!4b1!4m5!3m4!1s0x31da11238a8b9375:0x887869cf52abf5c4!8m2!3d1.352083!4d103.819836',
         'caption': 'Latest News',
         'description': description,
-        'picture': 'https://s-media-cache-ak0.pinimg.com/564x/5f/6b/64/5f6b64420bbb41837b8d540ac325fb37.jpg'
+        'picture': 'http://www.sghomeonline.com/wp-content/uploads/2012/04/map_singapore.png'
     }
     # post status
-    status = api.put_wall_post(message='Pig Alert', attachment=attachment)
+    status = api.put_wall_post(message=message, attachment=attachment)
 
 
 def get_api(cfg):
