@@ -42,12 +42,12 @@ Dispatch and send out SMS with the corresponding crisis details.
 * Creates a new row in CrisisMode with attribute 'inCrisis' = False with current datetime.
 * Returns newly created CrisisMode
 
-sendToTwitter/cid
+**sendToTwitter/cid**
 
 * Sends a tweet to twitter with details of the corresponding crisis where crisis_id = cid
 * Returns corresponding crisis
 
-sendToFacebook/cid
+**sendToFacebook/cid**
 
 * Post to Facebook with details of the corresponding crisis where crisis_id = cid
 * Returns corresponding crisis
