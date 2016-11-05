@@ -62,10 +62,11 @@ def getUnapprovedCrisis(request):
 
 @csrf_exempt
 def sendDispatch(request, crisisID, dispatcher):
-    crisis = Crisis.objects.filter(id=crisisID)
+    crisis = Crisis.objects.get(id=crisisID)
     dispatch = Dispatch(crisis=crisis, dispatcher=dispatcher)
     # TODO SMS HANDLER
-    generateSms(request, '91007606', 'hello world')
+    generateSms(request, '91007606', crisis.name + " at " + crisis.location)
+    dispatch.save()
     return HttpResponse(dispatch)
 
 

@@ -31,4 +31,4 @@ def generateSms(request, send_to, message_body):
         'message': message_body,
     }
     r = requests.post(settings.SMS_GATEWAY_URL, data=postdata)
-    return HttpResponse(received_json_data)
+    return HttpResponse(postdata)

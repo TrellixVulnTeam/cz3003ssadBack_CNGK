@@ -32,4 +32,6 @@ urlpatterns = [
         name="crisis_retrieval_approved"),
     url(r'^getUnapprovedCrisis/', backendViews.getUnapprovedCrisis,
         name="crisis_retrieval_unapproved"),
+    url(r'^sendDispatch/(?P<crisisID>[0-9]+)/(?P<dispatcher>.+)/$', backendViews.sendDispatch,
+        name="send_dispatch"),
 ]
