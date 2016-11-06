@@ -59,7 +59,7 @@ class CrisisMode(models.Model):
     time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.inCrisis
+        return str(self.inCrisis)
 
 
 class Dispatch(models.Model):

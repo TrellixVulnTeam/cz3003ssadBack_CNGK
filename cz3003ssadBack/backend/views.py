@@ -91,6 +91,12 @@ def toggleCrisisModeOff(request):
 
 
 @csrf_exempt
+def getCrisisMode(request):
+    mode = CrisisMode.objects.order_by('-id')[0]
+    return HttpResponse(mode.inCrisis)
+
+
+@csrf_exempt
 def sendToTwitter(request, crisisID):
     crisis = Crisis.objects.get(id=crisisID)
     tweet = crisis.disaster + " " + crisis.name + " " + \

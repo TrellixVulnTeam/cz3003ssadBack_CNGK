@@ -42,6 +42,8 @@ urlpatterns = [
         name="crisis_mode_on"),
     url(r'^toggleCrisisModeOff/$', backendViews.toggleCrisisModeOff,
         name="crisis_mode_off"),
+    url(r'^getCrisisMode/$', backendViews.getCrisisMode,
+        name="get_crisis_mode"),
     url(r'^sendToTwitter/(?P<crisisID>[0-9]+)$', backendViews.sendToTwitter,
         name="send_to_twitter"),
     url(r'^sendToFacebook/(?P<crisisID>[0-9]+)$', backendViews.sendToFacebook,

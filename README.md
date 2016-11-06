@@ -31,10 +31,10 @@ cid = Crisis ID
 
 * Returns all crisis where attribute 'approved' = False in JSON format
 
-**sendDispatch/cid/dispatcher**
+**sendDispatch/cid/**
 
-* Takes in crisis ID(int) and dispatcher(string), creates new row in
-Dispatch and send out SMS with the corresponding crisis details.
+* Takes in crisis ID(int) and JSON file, creates new row in
+Dispatch and send out SMS to dispatch.contact with the corresponding crisis details.
 * Returns Dispatch data
 
 **toggleCrisisModeOn**
@@ -46,6 +46,11 @@ Dispatch and send out SMS with the corresponding crisis details.
 
 * Creates a new row in CrisisMode with attribute 'inCrisis' = False with current datetime.
 * Returns newly created CrisisMode
+
+**getCrisisMode**
+
+* Gets latest crisis mode.
+* Returns latest CrisisMode
 
 **sendToTwitter/cid**
 
