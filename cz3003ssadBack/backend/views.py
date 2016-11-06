@@ -61,12 +61,17 @@ def getUnapprovedCrisis(request):
 
 
 @csrf_exempt
-def sendDispatch(request, crisisID, dispatcher):
+def sendDispatch(request, crisisID):
+    received_json_data = json.loads(request.body.decode('utf-8'))
     crisis = Crisis.objects.get(id=crisisID)
-    dispatch = Dispatch(crisis=crisis, dispatcher=dispatcher)
-    # TODO SMS HANDLER
-    generateSms(request, '91007606', crisis.disaster +
-                " " + crisis.name + " at " + crisis.location)
+    agency = received_json_data["agency"]
+    resource = received_json_data["resource"]
+    contact = received_json_data["contact"]
+    time = received_json_data["time"]
+    dispatch = Dispatch(crisis=crisis, agency=agency,
+                        resource=resource, contact=contact, time=time)
+    generateSms(request, dispatch.contact, crisis.disaster + " " +
+                crisis.name + " at " + crisis.location + ". " + dispatch.resource)
     dispatch.save()
     return HttpResponse(dispatch)
 
@@ -74,12 +79,14 @@ def sendDispatch(request, crisisID, dispatcher):
 @csrf_exempt
 def toggleCrisisModeOn(request):
     mode = CrisisMode(inCrisis=True)
+    mode.save()
     return HttpResponse(mode)
 
 
 @csrf_exempt
 def toggleCrisisModeOff(request):
     mode = CrisisMode(inCrisis=False)
+    mode.save()
     return HttpResponse(mode)
 
 
