@@ -54,6 +54,17 @@ def getApprovedCrisis(request):
 
 
 @csrf_exempt
+def getPublicApprovedCrisis(request):
+    mode = CrisisMode.objects.order_by('-id')[0]
+    if mode.inCrisis:
+        data = json.dumps([c.get_json()
+                           for c in Crisis.objects.filter(closed=False, approved=True)])
+        return HttpResponse(data)
+    else:
+        return HttpResponse('[]')
+
+
+@csrf_exempt
 def getUnapprovedCrisis(request):
     data = json.dumps([c.get_json()
                        for c in Crisis.objects.filter(closed=False, approved=False)])

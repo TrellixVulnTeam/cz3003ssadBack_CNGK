@@ -27,6 +27,10 @@ cid = Crisis ID
 
 * Returns all crisis where attribute 'approved' = True in JSON format
 
+**getPublicApprovedCrisis**
+
+* Returns all crisis where attribute 'approved' = True in JSON format only when in crisis mode
+
 **getUnapprovedCrisis**
 
 * Returns all crisis where attribute 'approved' = False in JSON format
