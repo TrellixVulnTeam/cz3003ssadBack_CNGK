@@ -28,9 +28,9 @@ urlpatterns = [
     url(r'^sms/generateSms/$', smsViews.generateSms, name="send_sms"),
 
     url(r'^submitCrisis/$', backendViews.submitCrisis, name="crisis_submission"),
-    url(r'^approveCrisis/(?P<crisisID>[0-9]+)$',
+    url(r'^approveCrisis/(?P<crisisID>[0-9]+)/$',
         backendViews.approveCrisis, name="crisis_approve"),
-    url(r'^closeCrisis/(?P<crisisID>[0-9]+)$',
+    url(r'^closeCrisis/(?P<crisisID>[0-9]+)/$',
         backendViews.closeCrisis, name="crisis_close"),
     url(r'^getApprovedCrisis/$', backendViews.getApprovedCrisis,
         name="crisis_retrieval_approved"),
