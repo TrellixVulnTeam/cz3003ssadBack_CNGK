@@ -1,4 +1,4 @@
-from django.db import models
+﻿from django.db import models
 
 # Create your models here.
 
@@ -27,7 +27,8 @@ class Crisis(models.Model):
             'location': self.location,
             'severity': self.severity,
             'time': self.time,
-            'coordinates': [{'lat': coord.latitude, 'lng': coord.longitude} for coord in CrisisCoordinates.objects.filter(crisis=self)]}
+            'coordinates': [{'lat': coord.latitude, 'lng': coord.longitude} for coord in CrisisCoordinates.objects.filter(crisis=self)],
+            'approved': self.approved}
 
 
 class CrisisCoordinates(models.Model):
