@@ -18,6 +18,7 @@ from django.contrib import admin
 from email_handler import views as emailViews
 from backend import views as backendViews
 from smshandler import views as smsViews
+from backend import socialMediaHandler as socialMediaHandler
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -46,8 +47,8 @@ urlpatterns = [
         name="crisis_mode_off"),
     url(r'^getCrisisMode/$', backendViews.getCrisisMode,
         name="get_crisis_mode"),
-    url(r'^sendToTwitter/(?P<crisisID>[0-9]+)$', backendViews.sendToTwitter,
+    url(r'^sendToTwitter/(?P<crisisID>[0-9]+)/$', socialMediaHandler.sendToTwitter,
         name="send_to_twitter"),
-    url(r'^sendToFacebook/(?P<crisisID>[0-9]+)$', backendViews.sendToFacebook,
+    url(r'^sendToFacebook/(?P<crisisID>[0-9]+)/$', socialMediaHandler.sendToFacebook,
         name="send_to_facebook"),
 ]

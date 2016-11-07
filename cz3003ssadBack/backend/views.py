@@ -3,7 +3,6 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.core import serializers
 import json
 from backend.models import Crisis, CrisisCoordinates, CrisisMode, Dispatch
-from backend import postToFacebook, postToTwitter
 from smshandler.views import generateSms
 # Create your views here.
 
@@ -106,23 +105,3 @@ def toggleCrisisModeOff(request):
 def getCrisisMode(request):
     mode = CrisisMode.objects.order_by('-id')[0]
     return HttpResponse(mode.inCrisis)
-
-
-@csrf_exempt
-def sendToTwitter(request, crisisID):
-    crisis = Crisis.objects.get(id=crisisID)
-    tweet = crisis.disaster + " " + crisis.name + " " + \
-        crisis.description + " at " + crisis.region + " " + crisis.location
-    for i in range(0, len(tweet), 140):
-        postToTwitter.main(tweet[i:i + 140])
-    return HttpResponse(crisis)
-
-
-@csrf_exempt
-def sendToFacebook(request, crisisID):
-    crisis = Crisis.objects.get(id=crisisID)
-    title = crisis.disaster + " " + crisis.name + \
-        " at " + crisis.region + " " + crisis.location
-    description = crisis.description
-    postToFacebook.main(title, description)
-    return HttpResponse(crisis)
