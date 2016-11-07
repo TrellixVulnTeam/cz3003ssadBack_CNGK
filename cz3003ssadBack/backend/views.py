@@ -112,7 +112,7 @@ def getCrisisMode(request):
 def sendToTwitter(request, crisisID):
     crisis = Crisis.objects.get(id=crisisID)
     tweet = crisis.disaster + " " + crisis.name + " " + \
-        crisis.description + " at " + crisis.location
+        crisis.description + " at " + crisis.region + " " + crisis.location
     for i in range(0, len(tweet), 140):
         postToTwitter.main(tweet[i:i + 140])
     return HttpResponse(crisis)
@@ -121,6 +121,8 @@ def sendToTwitter(request, crisisID):
 @csrf_exempt
 def sendToFacebook(request, crisisID):
     crisis = Crisis.objects.get(id=crisisID)
-    postToFacebook.main(crisis.disaster + " " +
-                        crisis.name + " at " + crisis.location, crisis.description)
+    title = crisis.disaster + " " + crisis.name + \
+        " at " + crisis.region + " " + crisis.location
+    description = crisis.description
+    postToFacebook.main(title, description)
     return HttpResponse(crisis)
