@@ -14,9 +14,10 @@ def index(request):
     'message': "AUTO MESSAGE, LET ME KNOW IF YOU SEE IT",
 	}
 	r = requests.post(settings.SMS_GATEWAY_URL, data=postdata)
-	print (r.status_code)
-	print (r.text)
+	print(r.status_code)
+	print(r.text)
 	return HttpResponse("Hello, world. You're at the sms index.")
+
 
 def generateSms(request):
 	received_json_data = json.loads(request.body.decode('utf-8'))

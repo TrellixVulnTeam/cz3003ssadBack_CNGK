@@ -2,7 +2,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, HttpResponse, redirect
 from django.core import serializers
 import json
-from backend.models import Crisis, CrisisCoordinates
+from backend.models import Crisis, CrisisCoordinates, CrisisMode, Dispatch
+from backend import postToFacebook, postToTwitter
 # Create your views here.
 
 
@@ -19,23 +20,76 @@ def submitCrisis(request):
     coordinates = received_json_data["coordinates"]
     crisis = Crisis(disaster=disaster, severity=severity, shapeType=shapeType,
                     description=description, location=location, name=name, time=time)
-    # crisis.save()
+    crisis.save()
     print(crisis)
     for coord in coordinates:
         coordinate = CrisisCoordinates(crisis=crisis, latitude=coord[
                                        "lat"], longitude=coord["lng"])
-        # coordinate.save()
+        coordinate.save()
     return HttpResponse(received_json_data)
 
 
 @csrf_exempt
-def getCrisis(request):
+def approveCrisis(request, crisisID):
+    crisis = Crisis.objects.filter(id=crisisID)
+    crisis.approved = True
+    crisis.save()
+    return HttpResponse(crisis)
+
+
+@csrf_exempt
+def closeCrisis(request, crisisID):
+    crisis = Crisis.objects.filter(id=crisisID)
+    crisis.closed = True
+    crisis.save()
+    return HttpResponse(crisis)
+
+
+@csrf_exempt
+def getApprovedCrisis(request):
     data = json.dumps([c.get_json()
-                       for c in Crisis.objects.filter(closed=False)])
-    # allCrisis = Crisis.objects.all()
-    # JSONSerializer = serializers.get_serializer("json")
-    # json_serializer = JSONSerializer()
-    # json_serializer.serialize(allCrisis)
-    # data = json_serializer.getvalue()
-    print(data)
+                       for c in Crisis.objects.filter(closed=False, approved=True)])
     return HttpResponse(data)
+
+
+@csrf_exempt
+def getUnapprovedCrisis(request):
+    data = json.dumps([c.get_json()
+                       for c in Crisis.objects.filter(closed=False, approved=False)])
+    return HttpResponse(data)
+
+
+@csrf_exempt
+def sendDispatch(request, crisisID, dispatcher):
+    crisis = Crisis.objects.filter(id=crisisID)
+    dispatch = Dispatch(crisis=crisis, dispatcher=dispatcher)
+    # TODO SMS HANDLER
+    return HttpResponse(dispatch)
+
+
+@csrf_exempt
+def toggleCrisisModeOn(request):
+    mode = CrisisMode(inCrisis=True)
+    return HttpResponse(mode)
+
+
+@csrf_exempt
+def toggleCrisisModeOff(request):
+    mode = CrisisMode(inCrisis=False)
+    return HttpResponse(mode)
+
+
+@csrf_exempt
+def sendToTwitter(request, crisisID):
+    crisis = Crisis.objects.filter(id=crisisID)
+    tweet = crisis.name + " " + crisis.description + " at " + crisis.location
+    for i in range(0, len(tweet), 140):
+        postToTwitter.main(tweet[i:i + 140])
+    return HttpResponse(crisis)
+
+
+@csrf_exempt
+def sendToFacebook(request, crisisID):
+    crisis = Crisis.objects.filter(id=crisisID)
+    postToFacebook.main(crisis.name, crisis.description)
+    return HttpResponse(crisis)
