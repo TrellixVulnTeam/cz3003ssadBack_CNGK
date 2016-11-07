@@ -1,0 +1,25 @@
+<html>
+<body>
+Total Crisis Count: <strong>{{crisis_count}}</strong>
+Average Severity: {<strong>{avg_sev}}</strong>
+<table>
+  <tr>
+    <th>Disater</th>
+    <th>Name</th>
+    <th colspan = '2'>Description</th>
+    <th>Time</th>
+    <th>Severity</th>
+  </tr>
+  {% for crisis in query_crisis %}
+  <tr>
+    <td>{{%crisis.disaster%}}</td>
+    <td>{{%crisis.name%}}</td>
+    <td colspan = '2'>{{%crisis.description%}}</td>
+    <td>{{%crisis.time%}}</td>
+    <td>{{%crisis.severity%}}</td>
+  </tr>
+  {%endfor%}
+</table>
+This is a test message. {{username}}
+</body>
+</html>

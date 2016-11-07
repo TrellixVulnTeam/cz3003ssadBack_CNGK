@@ -1,0 +1,16 @@
+Report For Crisis\r\n\r\n
+
+Total Crisis Count: {{crisis_count}}\r\n
+Average Severity: {{avg_sev}}\r\n\r\n
+
+{% for crisis in query_crisis %}
+    Disaster   : {{ crisis.disaster }}\r\n
+    Crisis Name: {{ crisis.name }}\r\n
+    Description: {{ crisis.description }}\r\n
+    Time Logged: {{crisis.time }}\r\n
+    Severity   : {{ crisis.severity}}\r\n
+    Location   : {{ crisis.location}}\r\n
+    Region     : {{ crisis.region}}\r\n\r\n
+{%endfor%}
+\r\n\r\n
+Current Server Time: {{server_time}}
