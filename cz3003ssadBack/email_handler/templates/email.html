@@ -1,0 +1,42 @@
+<html>
+<style>
+	table, th, td {
+    border: 1px solid black;
+}
+table{
+	margin-top: 5px;
+}
+th,td{
+	padding: 5px;
+}
+</style>
+<body>
+<h1>Report For Crisis</h1>
+Total Crisis Count: <strong>{{crisis_count}}</strong><br>
+Average Severity: <strong>{{avg_sev}}</strong>
+<table>
+  <tr>
+    <th>Disater</th>
+    <th>Name</th>
+    <th colspan = '2'>Description</th>
+    <th>Time</th>
+    <th>Severity</th>
+    <th>Location</th>
+    <th>Region</th>
+  </tr>
+  {% for crisis in query_crisis %}
+  <tr>
+    <td>{{ crisis.disaster }}</td>
+    <td>{{ crisis.name }}</td>
+    <td colspan = '2'>{{ crisis.description }}</td>
+    <td>{{ crisis.time }}</td>
+    <td>{{ crisis.severity}}</td>
+    <td>{{ crisis.location}}</td>
+    <td>{{ crisis.region}}</td>
+  </tr>
+  {%endfor%}
+</table>
+<br>
+<strong>Current Server Time: {{server_time}}</strong>
+</body>
+</html>
