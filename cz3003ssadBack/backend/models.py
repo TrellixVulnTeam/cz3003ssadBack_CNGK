@@ -9,6 +9,7 @@ class Crisis(models.Model):
     shapeType = models.CharField(max_length=10)
     description = models.CharField(max_length=300)
     time = models.CharField(max_length=50)
+    region = models.CharField(max_length=10)
     location = models.CharField(max_length=300)
     severity = models.IntegerField()
     approved = models.BooleanField(default=False)
@@ -18,16 +19,33 @@ class Crisis(models.Model):
         return self.name + " " + self.disaster + " " + self.location
 
     def get_json(self):
-        return {
-            'id': self.id,
-            'disaster': self.disaster,
-            'name': self.name,
-            'type': self.shapeType,
-            'description': self.description,
-            'location': self.location,
-            'severity': self.severity,
-            'time': self.time,
-            'coordinates': [{'lat': coord.latitude, 'lng': coord.longitude} for coord in CrisisCoordinates.objects.filter(crisis=self)]}
+        if Dispatch.objects.filter(crisis=self):
+            # TODO
+            dispatch = Dispatch.objects.get(crisis=self)
+            return {
+                'id': self.id,
+                'disaster': self.disaster,
+                'name': self.name,
+                'type': self.shapeType,
+                'description': self.description,
+                'location': self.location,
+                'region': self.region,
+                'severity': self.severity,
+                'time': self.time,
+                'coordinates': [{'lat': coord.latitude, 'lng': coord.longitude} for coord in CrisisCoordinates.objects.filter(crisis=self)],
+                'dispatch': {'agency': dispatch.agency, 'resource': dispatch.resource, 'contact': dispatch.contact, 'time': dispatch.time}}
+        else:
+            return {
+                'id': self.id,
+                'disaster': self.disaster,
+                'name': self.name,
+                'type': self.shapeType,
+                'description': self.description,
+                'location': self.location,
+                'region': self.region,
+                'severity': self.severity,
+                'time': self.time,
+                'coordinates': [{'lat': coord.latitude, 'lng': coord.longitude} for coord in CrisisCoordinates.objects.filter(crisis=self)]}
 
 
 class CrisisCoordinates(models.Model):
@@ -44,12 +62,15 @@ class CrisisMode(models.Model):
     time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.inCrisis
+        return str(self.inCrisis)
 
 
 class Dispatch(models.Model):
     crisis = models.ForeignKey(Crisis, on_delete=models.CASCADE)
-    dispatcher = models.CharField(max_length=20)
+    agency = models.CharField(max_length=20)
+    resource = models.CharField(max_length=300)
+    contact = models.IntegerField()
+    time = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.crisis.name + " " + self.dispatcher
+        return self.crisis.name + " " + self.agency + " " + self.resource
