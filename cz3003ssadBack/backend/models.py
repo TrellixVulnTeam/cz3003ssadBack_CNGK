@@ -9,6 +9,7 @@ class Crisis(models.Model):
     shapeType = models.CharField(max_length=10)
     description = models.CharField(max_length=300)
     time = models.CharField(max_length=50)
+    region = models.CharField(max_length=10)
     location = models.CharField(max_length=300)
     severity = models.IntegerField()
     approved = models.BooleanField(default=False)
@@ -28,6 +29,7 @@ class Crisis(models.Model):
                 'type': self.shapeType,
                 'description': self.description,
                 'location': self.location,
+                'region': self.region,
                 'severity': self.severity,
                 'time': self.time,
                 'coordinates': [{'lat': coord.latitude, 'lng': coord.longitude} for coord in CrisisCoordinates.objects.filter(crisis=self)],
@@ -40,6 +42,7 @@ class Crisis(models.Model):
                 'type': self.shapeType,
                 'description': self.description,
                 'location': self.location,
+                'region': self.region,
                 'severity': self.severity,
                 'time': self.time,
                 'coordinates': [{'lat': coord.latitude, 'lng': coord.longitude} for coord in CrisisCoordinates.objects.filter(crisis=self)]}

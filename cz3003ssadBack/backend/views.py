@@ -16,11 +16,12 @@ def submitCrisis(request):
     shapeType = received_json_data["type"]
     description = received_json_data["description"]
     location = received_json_data["location"]
+    region = received_json_data["region"]
     time = received_json_data["time"]
     name = received_json_data["name"]
     coordinates = received_json_data["coordinates"]
     crisis = Crisis(disaster=disaster, severity=severity, shapeType=shapeType,
-                    description=description, location=location, name=name, time=time)
+                    description=description, location=location, region=region, name=name, time=time)
     crisis.save()
     print(crisis)
     for coord in coordinates:
